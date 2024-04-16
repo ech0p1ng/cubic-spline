@@ -1,0 +1,355 @@
+﻿<Window x:Class="SplineVisualizationWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SplineVisualizationWPF"
+        mc:Ignorable="d"
+		xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Height="720" Width="1280"
+		MinHeight="600" MinWidth="800"
+		>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="25"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Menu Grid.Row="0"
+			  VerticalAlignment="Center"
+			  >
+			<MenuItem Name="ImportMenuItem"
+					  Header="Импорт"
+					  Click="ImportMenuItem_Click"
+					  />
+			<MenuItem Header="Экспорт"
+					  Name="ExportMenuItem"
+					  Click="ExportMenuItem_Click"
+					  />
+			<MenuItem Header="Построить сплайны"
+					  Name="RunMenuItem"
+					  Click="RunMenuItem_Click"
+					  />
+		</Menu>
+		<Grid Grid.Row="1">
+			<TabControl Margin="5,0,5,5"
+						Name="FunctionsTab"
+						>
+				<TabItem Header="Табличная функция"
+						 Name="TableFunctionTab"
+						 >
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="100"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<Grid  Height="100" Grid.Row="0">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="3*"/>
+								<RowDefinition Height="1*"/>
+							</Grid.RowDefinitions>
+
+							<Grid Grid.Row="0">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition/>
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition/>
+									<RowDefinition/>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+
+								<Label Grid.Column="0"
+									   Grid.Row="0"
+									   Content="x" HorizontalAlignment="Right" Width="60" 
+									   />
+								<Label Grid.Column="0"
+									   Grid.Row="1"
+									   Content="y" 
+									   />
+								<Label Grid.Column="0"
+									   Grid.Row="2"
+									   Content="x*" 
+									   />
+
+								<TextBox Name="XValuesTextBox"
+										 VerticalContentAlignment="Center"
+										 FontFamily="Consolas"
+										 Grid.Column="1" 
+										 Grid.Row="0"
+										 Margin="0,2,5,2"
+										 />
+								<TextBox Name="YValuesTextBox"
+										 VerticalContentAlignment="Center"
+										 Grid.Column="1" 
+										 Grid.Row="1"
+										 FontFamily="Consolas"
+										 Margin="0,2,5,2"
+										 />
+								<TextBox Name="XStarValuesTextBox"
+										 VerticalContentAlignment="Center"
+										 Grid.Column="1" 
+										 Grid.Row="2"
+										 FontFamily="Consolas"
+										 Margin="0,2,5,2"
+										 />
+							</Grid>
+
+							<Grid Grid.Row="1">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition />
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition />
+									<ColumnDefinition Width="100"/>
+									<ColumnDefinition Width="85"/>
+								</Grid.ColumnDefinitions>
+								<Label Content="S'(a)" 
+									   Grid.Column="0"
+									   
+									   />
+								<TextBox Name="SaTextBox"
+										 Grid.Column="1"
+										 VerticalContentAlignment="Center"
+										 FontFamily="Consolas"
+										 Margin="0,2,5,2"
+										 />
+								<Label Content="S'(b)"
+									   Grid.Column="2"
+									   />
+								<TextBox Name="SbTextBox" 
+										 Grid.Column="3"
+										 VerticalContentAlignment="Center"
+										 FontFamily="Consolas"
+										 Margin="0,2,5,2"
+										 />
+
+								<TextBlock Text="Количество точек"
+										   TextAlignment="Center"
+										   Grid.Column="4"
+										   VerticalAlignment="Center"
+										   />
+								<ComboBox Name="PointsAmountComboBox"
+										  Margin="5,2,5,2"
+										  Grid.Column="5"
+										  Width="75"
+										  />
+							</Grid>
+						</Grid>
+						<Grid Grid.Row="1"
+							  Margin="5,5,5,5"
+							  >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="3*"/>
+								<ColumnDefinition Width="1*"/>
+							</Grid.ColumnDefinitions>
+							
+							<ScrollViewer Grid.Column="1"
+										  VerticalScrollBarVisibility="Auto"
+										  >
+								<TextBox Name="ResultsTextBlock"
+										 IsReadOnly="True"
+										 Margin="5,22,0,0"
+										 >
+									
+								</TextBox>
+							</ScrollViewer>
+							
+							<TabControl Grid.Column="0" 
+										Grid.Row="1"
+										>
+								<TabItem Header="Исходный сплайн">
+									<lvc:CartesianChart Name="Spline1Chart" 
+														LegendLocation="Bottom"
+														/>
+								</TabItem>
+								<TabItem Header="Построенный сплайн">
+									<lvc:CartesianChart Name="Spline2Chart" 
+														LegendLocation="Bottom"
+														/>
+								</TabItem>
+								<TabItem Header="Оба сплайна">
+									<lvc:CartesianChart Name="SplinesBothChart" 
+														LegendLocation="Bottom"
+														/>
+								</TabItem>
+							</TabControl>
+						</Grid>
+					</Grid>
+				</TabItem>
+				<TabItem Header="Тестовая функция"
+						 Name="TestFunctionTab"
+						 >
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="100"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<Grid Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="60"/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition/>
+								<RowDefinition/>
+								<RowDefinition/>
+							</Grid.RowDefinitions>
+
+							<Label Content="Функция"
+								   Grid.Column="0"
+								   Grid.Row="0"								   
+								   VerticalAlignment="Center"
+								   />
+							<ComboBox x:Name="TestFunctionsComboBox"								  
+									  Width="75"
+									  Grid.Column="1"
+									  Grid.Row="0"
+									  Margin="0,2,0,2"
+									  HorizontalAlignment="Left"
+									  />
+
+							<Label Grid.Column="0"
+								   Grid.Row="2"
+								   Content="x*" 
+								   VerticalAlignment="Center"
+								   />
+
+							<Grid Grid.Row="1"
+								  Grid.ColumnSpan="2"
+								  >
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition />
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+
+								<Label Grid.Column="0"
+									   Content="Начало" 
+									   VerticalAlignment="Center"
+									   />
+
+								<TextBox Name="StartTextBoxTestTab"
+										 VerticalContentAlignment="Center"
+										 Grid.Column="1" 
+										 FontFamily="Consolas"
+										 Margin="0,2,5,2"
+										 />
+
+								<Label Grid.Column="2"
+									   Content="Конец" 
+									   VerticalAlignment="Center"
+									   />
+
+								<TextBox Name="EndTextBoxTestTab"
+										 VerticalContentAlignment="Center"
+										 Grid.Column="3" 
+										 FontFamily="Consolas"
+										 Margin="0,2,5,2"
+										 />
+							</Grid>
+
+							<TextBox Name="XStarValuesTextBoxTestTab"
+									 VerticalContentAlignment="Center"
+									 Grid.Column="1" 
+									 Grid.Row="2"
+									 FontFamily="Consolas"
+									 Margin="0,2,5,2"
+									 />
+
+							<Grid Grid.Row="3"
+								  Grid.ColumnSpan="2"
+								  >
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition />
+									<ColumnDefinition Width="60"/>
+									<ColumnDefinition />
+									<ColumnDefinition Width="100"/>
+									<ColumnDefinition Width="85"/>
+								</Grid.ColumnDefinitions>
+								<Label Content="S'(a)" 
+									   Grid.Column="0"
+									   />
+								<TextBox Name="SaTextBoxTestTab"
+										 Grid.Column="1"
+										 VerticalContentAlignment="Center"
+										 FontFamily="Consolas"
+										 IsReadOnly="True"
+										 Margin="0,2,5,2"
+										 Foreground="Gray"
+										 />
+								<Label Content="S'(b)"
+									   Grid.Column="2"
+									   />
+								<TextBox Name="SbTextBoxTestTab" 
+										 Grid.Column="3"
+										 VerticalContentAlignment="Center"
+										 FontFamily="Consolas"
+										 IsReadOnly="True"
+										 Margin="0,2,5,2"
+										 Foreground="Gray"
+										 />
+								<TextBlock Text="Количество точек"
+										   TextAlignment="Center"
+										   Grid.Column="4"
+										   VerticalAlignment="Center"
+										   />
+
+								<TextBox Name="PointsAmountTextBoxTestTab"
+										 VerticalContentAlignment="Center"
+										 Grid.Column="5" 
+										 Grid.Row="1"
+										 FontFamily="Consolas"
+										 Margin="5,2,5,2"
+										 />
+							</Grid>
+						</Grid>
+
+						<Grid Grid.Row="1"
+							  Margin="5,5,5,5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="3*"/>
+								<ColumnDefinition Width="1*"/>
+							</Grid.ColumnDefinitions>
+
+							<ScrollViewer Grid.Column="1"
+										  VerticalScrollBarVisibility="Auto"
+										  >
+								<TextBox 
+									Name="ResultsTextBlockTestTab"
+									IsReadOnly="True"
+									Margin="5,22,0,0"
+									>
+								</TextBox>
+							</ScrollViewer>
+
+							<TabControl Grid.Column="0" >
+								<TabItem Header="Исходный сплайн">
+									<lvc:CartesianChart Name="Spline1ChartTestTab" 
+														LegendLocation="Bottom"
+														/>
+								</TabItem>
+								<TabItem Header="Построенный сплайн">
+									<lvc:CartesianChart Name="Spline2ChartTestTab" 
+														LegendLocation="Bottom"
+														/>
+								</TabItem>
+								<TabItem Header="Оба сплайна">
+									<lvc:CartesianChart Name="SplinesBothChartTestTab" 
+														LegendLocation="Bottom"
+														/>
+								</TabItem>
+							</TabControl>
+						</Grid>
+					</Grid>
+				</TabItem>
+			</TabControl>
+		</Grid>
+	</Grid>
+</Window>
